@@ -1,0 +1,1601 @@
+```html
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChalYaar CY (چل یار) - اوکاڑہ کی اپنی بااعتماد رائیڈ سروس</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Nastaliq Urdu & Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyNavy: '#0A3D62',
+                        cyBlue: '#1E90FF',
+                        cyCyan: '#00A8FF',
+                        cyOrange: '#FF7F00',
+                        cyOrangeLight: '#FFA502',
+                        cyBg: '#F4F7FA'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        urdu: ['Noto Nastaliq Urdu', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Nastaliq Urdu', sans-serif;
+            background-color: #F4F7FA;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            line-height: 2.1;
+        }
+        .urdu-tight {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            line-height: 1.75;
+        }
+        .en-text {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            direction: ltr;
+        }
+        /* Subtle map grid pattern matching the logo background */
+        .map-bg-pattern {
+            background-color: #f8fafc;
+            background-image: 
+                linear-gradient(to right, rgba(10, 61, 98, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(10, 61, 98, 0.04) 1px, transparent 1px),
+                radial-gradient(circle at 85% 15%, rgba(30, 144, 255, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(255, 127, 0, 0.07) 0%, transparent 45%);
+            background-size: 36px 36px, 36px 36px, 100% 100%, 100% 100%;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 127, 0, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 127, 0, 0); }
+        }
+        .pulse-orange {
+            animation: pulseGlow 2.2s infinite;
+        }
+    </style>
+</head>
+<body class="map-bg-pattern text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Top Notification Toast Container -->
+    <div id="toastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- Header / Brand Bar (Triple-Click / Tap here unlocks Hidden Admin Login) -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <!-- Brand Identity (Secret Triple Tap Target) -->
+            <div id="brandSecretTrigger" class="flex items-center gap-3 cursor-pointer select-none group" title="ChalYaar CY - Okara">
+                <!-- Custom CY Shield-Arrow SVG Emblem matching user's logo -->
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-50 to-blue-50 border border-blue-100 flex items-center justify-center shadow-sm group-active:scale-95 transition-transform">
+                    <svg viewBox="0 0 120 120" class="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="shieldBlue" x1="15" y1="15" x2="95" y2="105" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#00A8FF"/>
+                                <stop offset="100%" stop-color="#0A3D62"/>
+                            </linearGradient>
+                            <linearGradient id="accentOrange" x1="30" y1="20" x2="90" y2="35" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#FF7F00"/>
+                                <stop offset="100%" stop-color="#FFA502"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Shield Outer -->
+                        <path d="M24 30C44 21 76 21 96 30C96 63 82 88 60 102C38 88 24 63 24 30Z" stroke="url(#shieldBlue)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Orange Top Speed Arc -->
+                        <path d="M35 28C51 22 71 22 86 29" stroke="url(#accentOrange)" stroke-width="5.5" stroke-linecap="round"/>
+                        <!-- CY Monogram -->
+                        <path d="M53 45C46 41 37 45 37 55C37 65 46 69 53 65" stroke="#0A3D62" stroke-width="7.5" stroke-linecap="round"/>
+                        <path d="M62 44L72 57L83 44M72 57V70" stroke="#1E90FF" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Dynamic Road Swoosh & Arrow -->
+                        <path d="M20 72C36 86 68 80 97 32" stroke="#1E90FF" stroke-width="6.5" stroke-linecap="round"/>
+                        <path d="M86 30L100 28L98 42" fill="#00A8FF"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-1.5" dir="ltr">
+                        <span class="text-2xl font-extrabold tracking-tight text-cyNavy en-text">Chal<span class="text-cyBlue relative">Yaar<span class="absolute -top-1.5 left-0 right-0 h-1 bg-cyOrange rounded-full"></span></span></span>
+                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-orange-100 text-cyOrange en-text">OKARA</span>
+                    </div>
+                    <div class="flex items-center gap-2 -mt-1">
+                        <span class="text-sm font-bold text-cyOrange urdu-tight">چل یار</span>
+                        <span class="text-[11px] text-slate-500">• اوکاڑہ شہر کی بااعتماد سواری</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Quick Info / Live Status -->
+            <div class="flex items-center gap-2">
+                <div class="hidden sm:flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-1.5 rounded-full text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span id="onlineDriversBadge">14 ڈرائیورز آن لائن</span>
+                </div>
+                <a href="tel:03000006974" class="flex items-center gap-1.5 bg-cyNavy hover:bg-blue-900 text-white px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition">
+                    <i class="fa-solid fa-headset text-cyOrange"></i>
+                    <span class="hidden xs:inline">ہیلپ لائن</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Navigation Tabs (Clean 3-Tab Interface; Admin is Completely Hidden) -->
+        <nav class="max-w-5xl mx-auto px-3 pb-2.5 pt-1">
+            <div class="grid grid-cols-3 gap-2 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/70">
+                <button onclick="switchTab('book')" id="tab-book" class="nav-tab active flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-cyNavy text-white shadow-md">
+                    <i class="fa-solid fa-taxi text-cyOrange text-base"></i>
+                    <span class="urdu-tight">سواری بُک کریں</span>
+                    <span class="hidden md:inline text-[11px] opacity-80 en-text">(Book Ride)</span>
+                </button>
+                <button onclick="switchTab('passenger')" id="tab-passenger" class="nav-tab flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-cyNavy hover:bg-white/60">
+                    <i class="fa-solid fa-user-check text-cyBlue text-base"></i>
+                    <span class="urdu-tight">مسافر رجسٹریشن</span>
+                    <span class="hidden md:inline text-[11px] opacity-80 en-text">(Passenger)</span>
+                </button>
+                <button onclick="switchTab('driver')" id="tab-driver" class="nav-tab flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-cyNavy hover:bg-white/60">
+                    <i class="fa-solid fa-id-card-clip text-cyOrange text-base"></i>
+                    <span class="urdu-tight">ڈرائیور رجسٹریشن</span>
+                    <span class="hidden md:inline text-[11px] opacity-80 en-text">(Driver)</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-5">
+
+        <!-- ==================== TAB 1: BOOK RIDE (سواری بُک کریں) ==================== -->
+        <section id="view-book" class="space-y-5">
+            <!-- Hero Banner -->
+            <div class="rounded-3xl bg-gradient-to-l from-cyNavy via-[#0d4d7c] to-cyBlue text-white p-5 sm:p-6 shadow-lg relative overflow-hidden">
+                <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-orange-200 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                            <i class="fa-solid fa-shield-halved text-cyOrange"></i> تصدیق شدہ ڈرائیورز • محفوظ فیملی سفر
+                        </span>
+                        <h1 class="text-xl sm:text-2xl font-bold urdu-tight">اوکاڑہ شہر اور یونیورسٹی آف اوکاڑہ کے لیے فوری رائیڈ</h1>
+                        <p class="text-xs sm:text-sm text-blue-100 mt-1">لاری اڈا، ڈی ایچ کیو ہسپتال، گول چوک، کینٹ یا یونیورسٹی — مناسب کرایہ، تیز پک اپ!</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 text-center min-w-[130px]">
+                        <div class="text-xs text-blue-100">کل رجسٹرڈ اسٹاپس</div>
+                        <div id="totalStopsCounter" class="text-2xl font-extrabold text-cyOrange en-text">55+</div>
+                        <div class="text-[11px] text-blue-100">اوکاڑہ شہر کی حدود</div>
+                    </div>
+                </div>
+                <!-- Decorative Circle -->
+                <div class="w-40 h-40 rounded-full bg-cyOrange/20 blur-2xl absolute -bottom-12 -left-10"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                <!-- Left/Main Column: Booking Form -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h2 class="text-lg font-bold text-cyNavy urdu-tight flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-xl bg-blue-50 text-cyBlue flex items-center justify-center"><i class="fa-solid fa-route"></i></span>
+                            اپنا روٹ اور سواری منتخب کریں
+                        </h2>
+                        <button type="button" onclick="swapLocations()" class="text-xs bg-slate-100 hover:bg-orange-50 text-slate-700 hover:text-cyOrange font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5" title="پک اپ اور ڈراپ تبدیل کریں">
+                            <i class="fa-solid fa-right-left"></i> روٹ بدلیں
+                        </button>
+                    </div>
+
+                    <!-- Quick Popular Okara Chips -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">مشہور مقامات (فوری انتخاب):</label>
+                        <div class="flex flex-wrap gap-1.5">
+                            <button type="button" onclick="quickSetStop('یونیورسٹی آف اوکاڑہ (University of Okara - Renala Road)')" class="text-xs bg-blue-50 hover:bg-cyBlue hover:text-white text-cyNavy font-semibold px-2.5 py-1.5 rounded-xl border border-blue-200/70 transition">
+                                🎓 یونیورسٹی آف اوکاڑہ
+                            </button>
+                            <button type="button" onclick="quickSetStop('مین لاری اڈا / جنرل بس اسٹینڈ اوکاڑہ (General Bus Stand)')" class="text-xs bg-orange-50 hover:bg-cyOrange hover:text-white text-orange-900 font-semibold px-2.5 py-1.5 rounded-xl border border-orange-200/70 transition">
+                                🚌 مین لاری اڈا
+                            </button>
+                            <button type="button" onclick="quickSetStop('ڈی ایچ کیو ہسپتال اوکاڑہ (DHQ Hospital Okara)')" class="text-xs bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-900 font-semibold px-2.5 py-1.5 rounded-xl border border-emerald-200/70 transition">
+                                🏥 DHQ ہسپتال
+                            </button>
+                            <button type="button" onclick="quickSetStop('گول چوک اوکاڑہ (Gol Chowk)')" class="text-xs bg-slate-100 hover:bg-cyNavy hover:text-white text-slate-800 font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200 transition">
+                                📍 گول چوک
+                            </button>
+                            <button type="button" onclick="quickSetStop('اوکاڑہ کینٹ گیٹ (Okara Cantt Gate)')" class="text-xs bg-slate-100 hover:bg-cyNavy hover:text-white text-slate-800 font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200 transition">
+                                🛡️ اوکاڑہ کینٹ
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pickup & Drop Inputs with Searchable Datalist -->
+                    <div class="space-y-3 relative">
+                        <div>
+                            <label for="pickupInput" class="block text-xs font-bold text-slate-700 mb-1">
+                                <i class="fa-solid fa-circle-dot text-cyBlue ml-1"></i> کہاں سے بیٹھنا ہے؟ (Pickup Point)
+                            </label>
+                            <div class="relative">
+                                <input list="okaraStopsList" id="pickupInput" oninput="calculateFare()" placeholder="اسٹاپ تلاش کریں یا منتخب کریں (مثلاً: گول چوک، لاری اڈا...)" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue focus:bg-white rounded-2xl px-4 py-3 text-sm font-medium outline-none transition">
+                                <button type="button" onclick="document.getElementById('pickupInput').value=''; calculateFare();" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="dropInput" class="block text-xs font-bold text-slate-700 mb-1">
+                                <i class="fa-solid fa-location-dot text-cyOrange ml-1"></i> کہاں جانا ہے؟ (Drop-off Point)
+                            </label>
+                            <div class="relative">
+                                <input list="okaraStopsList" id="dropInput" oninput="calculateFare()" placeholder="منزل منتخب کریں (مثلاً: یونیورسٹی آف اوکاڑہ، DHQ ہسپتال...)" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange focus:bg-white rounded-2xl px-4 py-3 text-sm font-medium outline-none transition">
+                                <button type="button" onclick="document.getElementById('dropInput').value=''; calculateFare();" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Shared Datalist populated dynamically with 55+ Okara Stops -->
+                        <datalist id="okaraStopsList"></datalist>
+                    </div>
+
+                    <!-- Vehicle Type Selection -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">سواری کی قسم منتخب کریں (Vehicle Type):</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="vehicleSelector">
+                            <!-- Bike -->
+                            <button type="button" onclick="selectVehicle('bike')" data-vehicle="bike" class="vehicle-card active border-2 border-cyBlue bg-blue-50/70 rounded-2xl p-3 text-center transition hover:shadow-md">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-cyBlue text-white flex items-center justify-center text-lg mb-1.5">
+                                    <i class="fa-solid fa-motorcycle"></i>
+                                </div>
+                                <div class="font-bold text-sm text-cyNavy">بائیک (Bike)</div>
+                                <div class="text-[11px] text-slate-500">1 مسافر • تیز رفتار</div>
+                                <div id="price-bike" class="text-xs font-extrabold text-cyOrange mt-1 en-text">Rs. 70</div>
+                            </button>
+                            <!-- Rickshaw -->
+                            <button type="button" onclick="selectVehicle('rickshaw')" data-vehicle="rickshaw" class="vehicle-card border-2 border-slate-200 bg-white rounded-2xl p-3 text-center transition hover:shadow-md">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-orange-100 text-cyOrange flex items-center justify-center text-lg mb-1.5">
+                                    <i class="fa-solid fa-taxi"></i>
+                                </div>
+                                <div class="font-bold text-sm text-cyNavy">رکشہ (Auto)</div>
+                                <div class="text-[11px] text-slate-500">3 مسافر • فیملی</div>
+                                <div id="price-rickshaw" class="text-xs font-extrabold text-cyOrange mt-1 en-text">Rs. 130</div>
+                            </button>
+                            <!-- Mini Car -->
+                            <button type="button" onclick="selectVehicle('mini')" data-vehicle="mini" class="vehicle-card border-2 border-slate-200 bg-white rounded-2xl p-3 text-center transition hover:shadow-md">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-slate-100 text-cyNavy flex items-center justify-center text-lg mb-1.5">
+                                    <i class="fa-solid fa-car-side"></i>
+                                </div>
+                                <div class="font-bold text-sm text-cyNavy">منی کار</div>
+                                <div class="text-[11px] text-slate-500">4 مسافر • آرام دہ</div>
+                                <div id="price-mini" class="text-xs font-extrabold text-cyOrange mt-1 en-text">Rs. 230</div>
+                            </button>
+                            <!-- AC Car -->
+                            <button type="button" onclick="selectVehicle('ac')" data-vehicle="ac" class="vehicle-card border-2 border-slate-200 bg-white rounded-2xl p-3 text-center transition hover:shadow-md">
+                                <div class="w-10 h-10 mx-auto rounded-xl bg-cyan-100 text-cyCyan flex items-center justify-center text-lg mb-1.5">
+                                    <i class="fa-solid fa-snowflake"></i>
+                                </div>
+                                <div class="font-bold text-sm text-cyNavy">اے سی کار</div>
+                                <div class="text-[11px] text-slate-500">4 مسافر • AC</div>
+                                <div id="price-ac" class="text-xs font-extrabold text-cyOrange mt-1 en-text">Rs. 330</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Passenger Quick Contact Info for Booking -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">مسافر کا نام (Passenger Name)</label>
+                            <input type="text" id="bookPassengerName" placeholder="مثلاً: محمد احمد" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-3.5 py-2.5 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">موبائل نمبر (Mobile Number)</label>
+                            <input type="tel" id="bookPassengerPhone" placeholder="0300-1234567" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-3.5 py-2.5 text-sm text-right outline-none en-text">
+                        </div>
+                    </div>
+
+                    <!-- Female Safety Toggle -->
+                    <label class="flex items-center justify-between bg-pink-50/70 border border-pink-200/80 rounded-2xl px-4 py-2.5 cursor-pointer">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center"><i class="fa-solid fa-user-shield"></i></span>
+                            <div>
+                                <div class="text-xs font-bold text-pink-950">فیملی / طالبات سیفٹی ترجیح (Priority Verified Driver)</div>
+                                <div class="text-[11px] text-pink-700">صرف 5 اسٹار تصدیق شدہ ڈرائیور تفویض ہوگا</div>
+                            </div>
+                        </div>
+                        <input type="checkbox" id="femaleSafetyCheck" class="w-5 h-5 accent-pink-600 rounded">
+                    </label>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-2">
+                        <button type="button" onclick="confirmRideBooking()" class="sm:col-span-8 bg-gradient-to-r from-cyOrange to-orange-500 hover:from-orange-600 hover:to-orange-500 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg shadow-orange-500/25 transition flex items-center justify-center gap-2 text-sm pulse-orange">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>فوری رائیڈ بُک کریں (Confirm Ride)</span>
+                        </button>
+                        <button type="button" onclick="bookViaWhatsApp()" class="sm:col-span-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-2xl shadow-md transition flex items-center justify-center gap-2 text-xs">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>واٹس ایپ بُکنگ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live Fare Summary, Route Preview & Active Ride Ticket -->
+                <div class="lg:col-span-5 space-y-4">
+                    <!-- Fare & Route Card -->
+                    <div class="glass-card rounded-3xl p-5 shadow-sm border-t-4 border-t-cyBlue">
+                        <h3 class="text-base font-bold text-cyNavy urdu-tight mb-3 flex items-center justify-between">
+                            <span>کرایہ اور فاصلے کا تخمینہ</span>
+                            <span class="text-xs font-normal bg-blue-50 text-cyBlue px-2.5 py-1 rounded-full en-text" id="estDistanceBadge">~ 4.5 km</span>
+                        </h3>
+
+                        <!-- Visual Route Line -->
+                        <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200/70 space-y-3 mb-4">
+                            <div class="flex items-start gap-3">
+                                <div class="flex flex-col items-center mt-1">
+                                    <span class="w-3 h-3 rounded-full bg-cyBlue ring-4 ring-blue-100"></span>
+                                    <span class="w-0.5 h-8 bg-dashed border-l-2 border-dashed border-slate-300 my-1"></span>
+                                    <span class="w-3 h-3 rounded-full bg-cyOrange ring-4 ring-orange-100"></span>
+                                </div>
+                                <div class="flex-1 space-y-3 text-xs">
+                                    <div>
+                                        <span class="text-slate-400 block">پک اپ اسٹاپ:</span>
+                                        <span id="summaryPickup" class="font-bold text-slate-800">گول چوک اوکاڑہ (Gol Chowk)</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-slate-400 block">منزل (ڈراپ):</span>
+                                        <span id="summaryDrop" class="font-bold text-slate-800">یونیورسٹی آف اوکاڑہ (Renala Road)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fare Breakdown -->
+                        <div class="space-y-2 text-xs border-b border-slate-100 pb-3">
+                            <div class="flex justify-between text-slate-600">
+                                <span>بنیادی کرایہ (Base Fare):</span>
+                                <span id="fareBase" class="font-bold en-text">Rs. 40</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>فاصلے کا کرایہ (<span id="fareKmText" class="en-text">4.5 km</span>):</span>
+                                <span id="fareDistance" class="font-bold en-text">Rs. 68</span>
+                            </div>
+                            <div class="flex justify-between text-emerald-600 font-semibold">
+                                <span>چل یار اوکاڑہ لانچ ڈسکاؤنٹ:</span>
+                                <span class="en-text">- Rs. 0 (Fixed Fair Rate)</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-3">
+                            <div>
+                                <div class="text-xs text-slate-500">کل متوقع کرایہ (Cash / JazzCash)</div>
+                                <div class="text-[11px] text-slate-400">وقتِ سفر: تقریباً <span id="estDurationText" class="en-text font-semibold text-slate-600">12 mins</span></div>
+                            </div>
+                            <div class="text-2xl font-extrabold text-cyNavy en-text" id="totalFareDisplay">Rs. 108</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Active Booking Ticket (Appears after booking) -->
+                    <div id="activeRideCard" class="hidden rounded-3xl bg-gradient-to-br from-cyNavy to-slate-900 text-white p-5 shadow-xl border border-blue-400/30">
+                        <div class="flex items-center justify-between border-b border-white/15 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span class="text-xs font-bold text-emerald-300">رائیڈ کنفرم ہو گئی ہے!</span>
+                            </div>
+                            <span class="bg-cyOrange text-white text-xs font-extrabold px-2.5 py-1 rounded-lg en-text" id="rideOtpBadge">OTP: 4821</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-300">بُکنگ آئی ڈی:</span>
+                                <span id="ticketRideId" class="font-bold en-text text-cyCyan">#CY-1042</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-300">تفویض کردہ ڈرائیور:</span>
+                                <span id="ticketDriverName" class="font-bold text-white">حاجی محمد اسلم (تصدیق شدہ)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-300">گاڑی نمبر و ماڈل:</span>
+                                <span id="ticketVehicleInfo" class="font-bold text-orange-300 en-text">Honda CD-70 • OKA-4512</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-300">ڈرائیور رابطہ:</span>
+                                <a id="ticketDriverPhone" href="tel:03001234567" class="font-bold text-emerald-300 underline en-text">0300-1234567</a>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
+                            <span class="text-[11px] text-blue-200">ڈرائیور 5-7 منٹ میں پہنچ رہا ہے</span>
+                            <button onclick="document.getElementById('activeRideCard').classList.add('hidden')" class="text-xs bg-white/15 hover:bg-white/25 px-3 py-1 rounded-lg">بند کریں</button>
+                        </div>
+                    </div>
+
+                    <!-- Okara All Stops Directory Explorer -->
+                    <div class="glass-card rounded-3xl p-4 shadow-sm">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-xs font-bold text-cyNavy flex items-center gap-1.5">
+                                <i class="fa-solid fa-map-location-dot text-cyOrange"></i> اوکاڑہ شہر کے تمام اسٹاپس کی فہرست
+                            </h4>
+                            <span class="text-[11px] text-slate-400" id="stopsCountPill">56 اسٹاپس</span>
+                        </div>
+                        <input type="text" id="stopDirectoryFilter" oninput="renderStopsDirectory()" placeholder="کسی بھی کالونی، بازار یا اڈے کا نام لکھیں..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs mb-2 outline-none focus:border-cyBlue">
+                        <div id="stopsDirectoryList" class="max-h-44 overflow-y-auto space-y-1 pr-1 text-xs"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: PASSENGER REGISTRATION (مسافر رجسٹریشن) ==================== -->
+        <section id="view-passenger" class="hidden max-w-2xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 shadow-md border-t-4 border-t-cyBlue">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-cyBlue flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-cyNavy urdu-tight">مسافر رجسٹریشن (Passenger Sign Up)</h2>
+                        <p class="text-xs text-slate-500">محفوظ سفر، ماہانہ یونیورسٹی پیکجز اور فوری رائیڈ بُکنگ کے لیے اپنا اکاؤنٹ بنائیں</p>
+                    </div>
+                </div>
+
+                <form id="passengerForm" onsubmit="handlePassengerSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">پورا نام (Full Name) *</label>
+                            <input type="text" id="passName" required placeholder="مثلاً: عائشہ صدیق / علی رضا" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">موبائل نمبر (Mobile Number) *</label>
+                            <input type="tel" id="passPhone" required placeholder="0300-1234567" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">جنس / کیٹیگری (Gender & Safety) *</label>
+                            <select id="passGender" required class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm outline-none">
+                                <option value="Male">مرد (Male)</option>
+                                <option value="Female">خاتون / طالبہ (Female - Priority Safety)</option>
+                                <option value="Family">فیملی اکاؤنٹ (Family)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">اوکاڑہ میں رہائشی علاقہ / اسٹاپ *</label>
+                            <input list="okaraStopsList" id="passArea" required placeholder="اپنا قریبی اسٹاپ منتخب کریں" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">شناختی کارڈ نمبر (CNIC - اختیاری)</label>
+                            <input type="text" id="passCnic" placeholder="35302-1234567-1" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">ایمرجنسی رابطہ نمبر (Emergency Contact) *</label>
+                            <input type="tel" id="passEmergency" required placeholder="والد / بھائی / سرپرست کا نمبر" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">4 ہندسوں کا سیکیورٹی پن (Security PIN) *</label>
+                        <input type="password" id="passPin" maxlength="6" required placeholder="****" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyNavy to-cyBlue hover:opacity-95 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>مسافر اکاؤنٹ مکمل کریں (Register Passenger)</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: DRIVER REGISTRATION (ڈرائیور رجسٹریشن) ==================== -->
+        <section id="view-driver" class="hidden max-w-3xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 shadow-md border-t-4 border-t-cyOrange">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-50 text-cyOrange flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-cyNavy urdu-tight">ڈرائیور پارٹنر رجسٹریشن (Driver Registration)</h2>
+                            <p class="text-xs text-slate-500">اوکاڑہ میں باعزت روزگار — پہلے 30 دن 0% کمیشن کے ساتھ اپنی سواری رجسٹر کریں</p>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1.5 rounded-xl self-start">
+                        🎉 0% کمیشن لانچ آفر
+                    </span>
+                </div>
+
+                <form id="driverForm" onsubmit="handleDriverSubmit(event)" class="space-y-5">
+                    <!-- Section A: Personal & Identity -->
+                    <div>
+                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-cyBlue mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-tie"></i> 1. ذاتی اور شناختی معلومات (Personal & CNIC Details)
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">ڈرائیور کا پورا نام *</label>
+                                <input type="text" id="drvName" required placeholder="شناختی کارڈ کے مطابق نام" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">والد کا نام (Father's Name) *</label>
+                                <input type="text" id="drvFather" required placeholder="ولدیت" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">موبائل / واٹس ایپ نمبر *</label>
+                                <input type="tel" id="drvPhone" required placeholder="0300-7654321" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">قومی شناختی کارڈ نمبر (CNIC) *</label>
+                                <input type="text" id="drvCnic" required placeholder="35302-1234567-1" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section B: Driving License & Address -->
+                    <div class="pt-2 border-t border-slate-100">
+                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-cyBlue mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-address-card"></i> 2. ڈرائیونگ لائسنس اور رہائش (License & Okara Address)
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">ڈرائیونگ لائسنس نمبر *</label>
+                                <input type="text" id="drvLicense" required placeholder="OKR-DL-98765" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm text-right outline-none en-text">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">لائسنس کی میعاد (Expiry) *</label>
+                                <input type="date" id="drvLicenseExpiry" required class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm outline-none en-text">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">پسندیدہ بیس اسٹاپ (اوکاڑہ) *</label>
+                                <input list="okaraStopsList" id="drvBaseStop" required placeholder="مثلاً: لاری اڈا / گول چوک" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm outline-none">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <label class="block text-xs font-bold text-slate-700 mb-1">مکمل رہائشی پتہ (اوکاڑہ شہر / تحصیل) *</label>
+                            <input type="text" id="drvAddress" required placeholder="محلہ / کالونی / چک نمبر، اوکاڑہ" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-4 py-2.5 text-sm outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Section C: Vehicle Information -->
+                    <div class="pt-2 border-t border-slate-100">
+                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-cyBlue mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-car"></i> 3. گاڑی کی تفصیلات (Vehicle Details)
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">سواری کی قسم *</label>
+                                <select id="drvVehicleType" required class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-3.5 py-2.5 text-sm outline-none">
+                                    <option value="bike">موٹر سائیکل (Bike)</option>
+                                    <option value="rickshaw">آٹو رکشہ (Rickshaw)</option>
+                                    <option value="mini">منی کار (Mini Car)</option>
+                                    <option value="ac">اے سی کار (AC Car)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">گاڑی کا ماڈل / نام *</label>
+                                <input type="text" id="drvVehicleModel" required placeholder="مثلاً: Honda 70 / Alto" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-3.5 py-2.5 text-sm outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">نمبر پلیٹ (Plate No) *</label>
+                                <input type="text" id="drvPlate" required placeholder="OKA-1234" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-3.5 py-2.5 text-sm text-right uppercase outline-none en-text">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">گاڑی کا رنگ (Color) *</label>
+                                <input type="text" id="drvColor" required placeholder="مثلاً: سفید / سرخ / سبز" class="w-full bg-slate-50 border border-slate-300 focus:border-cyOrange rounded-2xl px-3.5 py-2.5 text-sm outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section D: Required Document Uploads (with Live Preview) -->
+                    <div class="pt-2 border-t border-slate-100">
+                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-cyBlue mb-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-shield"></i> 4. ضروری دستاویزات کی تصاویر (Verification Documents)
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <label class="border-2 border-dashed border-slate-300 hover:border-cyBlue rounded-2xl p-3 text-center cursor-pointer bg-slate-50/70 transition">
+                                <input type="file" accept="image/*" class="hidden" onchange="previewDoc(this, 'prevCnicFront')">
+                                <img id="prevCnicFront" class="hidden w-full h-16 object-cover rounded-xl mb-1.5" alt="CNIC Front">
+                                <i class="fa-solid fa-id-card text-cyBlue text-lg mb-1"></i>
+                                <div class="text-[11px] font-bold text-slate-700">شناختی کارڈ (سامنے)</div>
+                                <div class="text-[10px] text-slate-400">تصویر منتخب کریں</div>
+                            </label>
+                            <label class="border-2 border-dashed border-slate-300 hover:border-cyBlue rounded-2xl p-3 text-center cursor-pointer bg-slate-50/70 transition">
+                                <input type="file" accept="image/*" class="hidden" onchange="previewDoc(this, 'prevCnicBack')">
+                                <img id="prevCnicBack" class="hidden w-full h-16 object-cover rounded-xl mb-1.5" alt="CNIC Back">
+                                <i class="fa-regular fa-id-card text-cyBlue text-lg mb-1"></i>
+                                <div class="text-[11px] font-bold text-slate-700">شناختی کارڈ (پیچھے)</div>
+                                <div class="text-[10px] text-slate-400">تصویر منتخب کریں</div>
+                            </label>
+                            <label class="border-2 border-dashed border-slate-300 hover:border-cyOrange rounded-2xl p-3 text-center cursor-pointer bg-slate-50/70 transition">
+                                <input type="file" accept="image/*" class="hidden" onchange="previewDoc(this, 'prevLicense')">
+                                <img id="prevLicense" class="hidden w-full h-16 object-cover rounded-xl mb-1.5" alt="License">
+                                <i class="fa-solid fa-address-book text-cyOrange text-lg mb-1"></i>
+                                <div class="text-[11px] font-bold text-slate-700">ڈرائیونگ لائسنس</div>
+                                <div class="text-[10px] text-slate-400">تصویر منتخب کریں</div>
+                            </label>
+                            <label class="border-2 border-dashed border-slate-300 hover:border-cyOrange rounded-2xl p-3 text-center cursor-pointer bg-slate-50/70 transition">
+                                <input type="file" accept="image/*" class="hidden" onchange="previewDoc(this, 'prevVehicle')">
+                                <img id="prevVehicle" class="hidden w-full h-16 object-cover rounded-xl mb-1.5" alt="Vehicle">
+                                <i class="fa-solid fa-camera text-cyOrange text-lg mb-1"></i>
+                                <div class="text-[11px] font-bold text-slate-700">گاڑی مع نمبر پلیٹ</div>
+                                <div class="text-[10px] text-slate-400">تصویر منتخب کریں</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyOrange to-orange-500 hover:opacity-95 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-orange-500/20 transition flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>ڈرائیور رجسٹریشن جمع کروائیں (Submit for Approval)</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== HIDDEN ADMIN DASHBOARD (Unlocked Only via azam85 / cy6974) ==================== -->
+        <section id="view-admin" class="hidden space-y-5">
+            <div class="rounded-3xl bg-slate-900 text-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl border border-slate-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-cyOrange/20 border border-cyOrange text-cyOrange flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-user-secret"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-lg font-extrabold en-text">ChalYaar Admin Control Center</h2>
+                            <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2 py-0.5 rounded-full en-text">AUTHENTICATED: azam85</span>
+                        </div>
+                        <p class="text-xs text-slate-300">اوکاڑہ آپریشنز، ڈرائیور ویریفکیشن، مسافر ریکارڈ اور اسٹاپس کا مکمل کنٹرول</p>
+                    </div>
+                </div>
+                <button onclick="logoutAdmin()" class="bg-red-500/20 hover:bg-red-600 text-red-200 hover:text-white border border-red-500/40 px-4 py-2 rounded-xl text-xs font-bold transition self-start sm:self-auto">
+                    <i class="fa-solid fa-lock mr-1"></i> لاگ آؤٹ اور چھپائیں (Lock & Hide)
+                </button>
+            </div>
+
+            <!-- Security Reminder Notice -->
+            <div class="bg-amber-50 border border-amber-300 text-amber-900 rounded-2xl p-3.5 text-xs flex items-start gap-2.5">
+                <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base mt-0.5"></i>
+                <div>
+                    <strong>پروڈکشن سیکیورٹی نوٹ:</strong> لائیو سرور پر جانے سے پہلے اس ایڈمن لاگ اِن اور ڈیٹا بیس کو <strong>Firebase Authentication</strong> اور <strong>Firebase Realtime Database / Firestore</strong> سے منسلک کریں تاکہ تمام ڈیوائسز پر لائیو سنکنگ اور مکمل سیکیورٹی حاصل ہو۔
+                </div>
+            </div>
+
+            <!-- Admin Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div class="glass-card rounded-2xl p-4 border-b-4 border-cyBlue">
+                    <div class="text-xs text-slate-500">کل رائیڈز (Rides)</div>
+                    <div id="statTotalRides" class="text-2xl font-extrabold text-cyNavy en-text mt-1">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-b-4 border-emerald-500">
+                    <div class="text-xs text-slate-500">منظور شدہ ڈرائیورز</div>
+                    <div id="statApprovedDrivers" class="text-2xl font-extrabold text-emerald-600 en-text mt-1">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-b-4 border-cyOrange">
+                    <div class="text-xs text-slate-500">زیرِ التواء منظوری</div>
+                    <div id="statPendingDrivers" class="text-2xl font-extrabold text-cyOrange en-text mt-1">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-b-4 border-indigo-500">
+                    <div class="text-xs text-slate-500">رجسٹرڈ مسافر</div>
+                    <div id="statTotalPassengers" class="text-2xl font-extrabold text-indigo-700 en-text mt-1">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 border-b-4 border-cyan-500 col-span-2 sm:col-span-1">
+                    <div class="text-xs text-slate-500">متوقع ریونیو</div>
+                    <div id="statRevenue" class="text-xl font-extrabold text-cyNavy en-text mt-1">Rs. 0</div>
+                </div>
+            </div>
+
+            <!-- Admin Sub-Navigation -->
+            <div class="flex flex-wrap gap-2 bg-white p-2 rounded-2xl border border-slate-200">
+                <button onclick="switchAdminSubTab('rides')" id="adTab-rides" class="admin-subtab bg-cyNavy text-white px-4 py-2 rounded-xl text-xs font-bold">رائیڈز مینجمنٹ (Rides)</button>
+                <button onclick="switchAdminSubTab('drivers')" id="adTab-drivers" class="admin-subtab bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">ڈرائیورز منظوری (Drivers)</button>
+                <button onclick="switchAdminSubTab('passengers')" id="adTab-passengers" class="admin-subtab bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">مسافر فہرست (Passengers)</button>
+                <button onclick="switchAdminSubTab('stops')" id="adTab-stops" class="admin-subtab bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">اوکاڑہ اسٹاپس (Stops)</button>
+            </div>
+
+            <!-- Admin Sub-View 1: Rides Management -->
+            <div id="adminPanel-rides" class="glass-card rounded-3xl p-5 overflow-x-auto">
+                <h3 class="text-sm font-bold text-cyNavy mb-3">تمام بُک شدہ رائیڈز (Live Ride Queue)</h3>
+                <table class="w-full text-right text-xs border-collapse min-w-[650px]">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 border-b border-slate-200">
+                            <th class="p-3 rounded-tr-xl">ID</th>
+                            <th class="p-3">مسافر</th>
+                            <th class="p-3">پک اپ ← ڈراپ</th>
+                            <th class="p-3">سواری / کرایہ</th>
+                            <th class="p-3">ڈرائیور</th>
+                            <th class="p-3 rounded-tl-xl">اسٹیٹس تبدیل کریں</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminRidesTableBody" class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
+
+            <!-- Admin Sub-View 2: Driver Approvals -->
+            <div id="adminPanel-drivers" class="hidden glass-card rounded-3xl p-5 overflow-x-auto">
+                <h3 class="text-sm font-bold text-cyNavy mb-3">ڈرائیور رجسٹریشنز اور ویریفکیشن</h3>
+                <table class="w-full text-right text-xs border-collapse min-w-[700px]">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 border-b border-slate-200">
+                            <th class="p-3 rounded-tr-xl">نام و ولدیت</th>
+                            <th class="p-3">فون / CNIC</th>
+                            <th class="p-3">گاڑی و نمبر پلیٹ</th>
+                            <th class="p-3">لائسنس / اسٹاپ</th>
+                            <th class="p-3">حیثیت (Status)</th>
+                            <th class="p-3 rounded-tl-xl">ایکشن</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminDriversTableBody" class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
+
+            <!-- Admin Sub-View 3: Registered Passengers -->
+            <div id="adminPanel-passengers" class="hidden glass-card rounded-3xl p-5 overflow-x-auto">
+                <h3 class="text-sm font-bold text-cyNavy mb-3">رجسٹرڈ مسافروں کا ریکارڈ</h3>
+                <table class="w-full text-right text-xs border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 border-b border-slate-200">
+                            <th class="p-3 rounded-tr-xl">نام</th>
+                            <th class="p-3">موبائل نمبر</th>
+                            <th class="p-3">کیٹیگری</th>
+                            <th class="p-3">رہائشی اسٹاپ</th>
+                            <th class="p-3 rounded-tl-xl">ایمرجنسی رابطہ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminPassengersTableBody" class="divide-y divide-slate-100"></tbody>
+                </table>
+            </div>
+
+            <!-- Admin Sub-View 4: Manage Okara Stops -->
+            <div id="adminPanel-stops" class="hidden glass-card rounded-3xl p-5 space-y-4">
+                <h3 class="text-sm font-bold text-cyNavy">اوکاڑہ شہر کی حدود میں نیا اسٹاپ شامل کریں</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                    <input type="text" id="newStopName" placeholder="نئے اسٹاپ کا اردو اور انگریزی نام (مثلاً: نیا محلہ چوک اوکاڑہ)" class="sm:col-span-6 bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs outline-none">
+                    <input type="number" step="0.1" id="newStopKm" placeholder="گول چوک سے فاصلہ (km)" class="sm:col-span-3 bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs outline-none en-text">
+                    <button onclick="addCustomStop()" class="sm:col-span-3 bg-cyBlue hover:bg-blue-600 text-white font-bold rounded-xl py-2.5 px-4 text-xs">
+                        <i class="fa-solid fa-plus"></i> اسٹاپ شامل کریں
+                    </button>
+                </div>
+                <div id="adminStopsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-64 overflow-y-auto pt-2"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Hidden Admin Login Modal (Triggered ONLY by Triple-Click on Brand Header or Ctrl+Shift+A) -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeAdminModal()" class="absolute top-4 left-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-cyNavy text-cyOrange flex items-center justify-center text-2xl mb-2 shadow-md">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-cyNavy en-text">ChalYaar CY Admin</h3>
+                <p class="text-xs text-slate-500">ایڈمن پینل تک رسائی کے لیے یوزرنیم اور پاس ورڈ درج کریں</p>
+            </div>
+            <form onsubmit="verifyAdminLogin(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1 en-text">Admin Username</label>
+                    <input type="text" id="adminUserInput" required autocomplete="off" dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm outline-none en-text">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1 en-text">Password</label>
+                    <input type="password" id="adminPassInput" required dir="ltr" class="w-full bg-slate-50 border border-slate-300 focus:border-cyBlue rounded-2xl px-4 py-2.5 text-sm outline-none en-text">
+                </div>
+                <p id="adminLoginError" class="hidden text-xs text-red-600 font-bold text-center">غلط یوزرنیم یا پاس ورڈ! دوبارہ کوشش کریں۔</p>
+                <button type="submit" class="w-full bg-cyNavy hover:bg-blue-950 text-white font-bold py-3 rounded-2xl shadow-md transition text-sm">
+                    لاگ اِن کریں (Unlock Dashboard)
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer (Clean without any Admin link) -->
+    <footer class="bg-white border-t border-slate-200/80 py-4 px-4 mt-8">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="font-extrabold text-cyNavy en-text">ChalYaar CY</span>
+                <span>| اوکاڑہ شہر کی اپنی بااعتماد کیب، رکشہ اور بائیک رائیڈ سروس</span>
+            </div>
+            <div class="en-text text-[11px] text-slate-400">
+                Serving Okara City Limits & University of Okara • 24/7 Safe Mobility
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== 1. COMPREHENSIVE OKARA CITY STOPS & UNIVERSITY DATA ====================
+        // Each stop includes approximate radial/corridor coordinates (x, y in km relative to Gol Chowk 0,0) for realistic fare estimation
+        const DEFAULT_OKARA_STOPS = [
+            { id: 1, name: "یونیورسٹی آف اوکاڑہ (University of Okara - Renala Road)", zone: "University", x: 11.5, y: 6.2 },
+            { id: 2, name: "یونیورسٹی آف اوکاڑہ مین گیٹ نمبر 1 (UO Gate 1)", zone: "University", x: 11.2, y: 6.0 },
+            { id: 3, name: "یونیورسٹی آف اوکاڑہ ہاسٹلز / گیٹ 2 (UO Hostels)", zone: "University", x: 11.8, y: 6.5 },
+            { id: 4, name: "مین لاری اڈا / جنرل بس اسٹینڈ اوکاڑہ (General Bus Stand)", zone: "Central", x: 0.8, y: 1.2 },
+            { id: 5, name: "ریلوے اسٹیشن اوکاڑہ (Okara Railway Station)", zone: "Central", x: -0.6, y: 0.4 },
+            { id: 6, name: "ڈی ایچ کیو ہسپتال اوکاڑہ (DHQ Hospital Okara)", zone: "Medical", x: 1.4, y: -1.1 },
+            { id: 7, name: "ڈی ایچ کیو ساؤتھ سٹی ہسپتال اوکاڑہ (DHQ South City)", zone: "Medical", x: 2.8, y: -2.4 },
+            { id: 8, name: "گول چوک اوکاڑہ (Gol Chowk)", zone: "Central", x: 0.0, y: 0.0 },
+            { id: 9, name: "تحصیل بازار / صدر بازار اوکاڑہ (Tehsil Bazaar)", zone: "Market", x: -0.3, y: 0.2 },
+            { id: 10, name: "ایم اے جناح روڈ اوکاڑہ (M.A. Jinnah Road)", zone: "Central", x: 0.5, y: 0.6 },
+            { id: 11, name: "اوکاڑہ کینٹ گیٹ نمبر 1 (Okara Cantt Gate 1)", zone: "Cantt", x: -4.8, y: -3.2 },
+            { id: 12, name: "اوکاڑہ کینٹ گیٹ نمبر 2 / ٹینک چوک (Cantt Tank Chowk)", zone: "Cantt", x: -5.5, y: -3.8 },
+            { id: 13, name: "اوکاڑہ کینٹ ریلوے اسٹیشن (Okara Cantt Station)", zone: "Cantt", x: -6.2, y: -4.1 },
+            { id: 14, name: "دیپالپور چوک اوکاڑہ (Depalpur Chowk)", zone: "Junction", x: 1.6, y: 1.5 },
+            { id: 15, name: "گورنمنٹ پوسٹ گریجویٹ کالج اوکاڑہ (Govt College Chowk)", zone: "Education", x: 1.2, y: -0.7 },
+            { id: 16, name: "گورنمنٹ کالج برائے خواتین اوکاڑہ (Govt Girls College)", zone: "Education", x: 0.9, y: -0.9 },
+            { id: 17, name: "پنجاب کالج اوکاڑہ کیمپس (Punjab College Okara)", zone: "Education", x: 2.2, y: 1.8 },
+            { id: 18, name: "سپیرئیر کالج اوکاڑہ کیمپس (Superior College Okara)", zone: "Education", x: 2.5, y: 2.0 },
+            { id: 19, name: "دی ایجوکیٹرز / بیکن ہاؤس اسکول اوکاڑہ", zone: "Education", x: 1.9, y: -1.5 },
+            { id: 20, name: "ڈی سی آفس / کچہری چوک اوکاڑہ (DC Office & Katchery)", zone: "Admin", x: 1.8, y: -1.6 },
+            { id: 21, name: "جوہر ٹاؤن اوکاڑہ (Johar Town Okara)", zone: "Residential", x: 2.6, y: -1.8 },
+            { id: 22, name: "شادمان ٹاؤن اوکاڑہ (Shadman Town Okara)", zone: "Residential", x: 3.1, y: -2.1 },
+            { id: 23, name: "سمن آباد اوکاڑہ (Samanabad Okara)", zone: "Residential", x: -1.4, y: 1.3 },
+            { id: 24, name: "فتح ٹاؤن / طارق آباد اوکاڑہ (Fateh Town / Tariqabad)", zone: "Residential", x: -1.8, y: 0.9 },
+            { id: 25, name: "کرم آباد اوکاڑہ (Karamabad Okara)", zone: "Residential", x: -1.1, y: -1.2 },
+            { id: 26, name: "اکبر روڈ / ریل بازار اوکاڑہ (Akbar Road & Rail Bazaar)", zone: "Market", x: -0.2, y: 0.5 },
+            { id: 27, name: "کپڑا مارکیٹ / چوک فوارہ اوکاڑہ (Fawara Chowk)", zone: "Market", x: 0.1, y: 0.3 },
+            { id: 28, name: "غلہ منڈی اوکاڑہ (Ghalla Mandi Okara)", zone: "Market", x: 0.7, y: 0.9 },
+            { id: 29, name: "سبزی و فروٹ منڈی اوکاڑہ (Sabzi Mandi)", zone: "Market", x: 2.4, y: 1.9 },
+            { id: 30, name: "اوکاڑہ بائی پاس جی ٹی روڈ (Okara Bypass GT Road)", zone: "Highway", x: 3.5, y: 2.6 },
+            { id: 31, name: "لاہور موڑ بائی پاس اوکاڑہ (Lahore Mor Bypass)", zone: "Highway", x: 4.2, y: 3.1 },
+            { id: 32, name: "ساہیوال موڑ بائی پاس اوکاڑہ (Sahiwal Mor Bypass)", zone: "Highway", x: -3.4, y: -2.2 },
+            { id: 33, name: "فیصل آباد روڈ چوک اوکاڑہ (Faisalabad Road Chowk)", zone: "Junction", x: 0.4, y: 2.3 },
+            { id: 34, name: "چوچک روڈ اسٹاپ اوکاڑہ (Chuchak Road Stop)", zone: "Suburb", x: 1.5, y: 3.4 },
+            { id: 35, name: "4/4L اسٹاپ اوکاڑہ (4/4L Stop Okara)", zone: "Suburb", x: 3.8, y: -3.2 },
+            { id: 36, name: "2/4L اسٹاپ دیپالپور روڈ (2/4L Stop)", zone: "Suburb", x: 3.2, y: 0.4 },
+            { id: 37, name: "52/2L اسٹاپ جی ٹی روڈ (52/2L Stop)", zone: "Suburb", x: 6.4, y: 4.1 },
+            { id: 38, name: "53/2L اسٹاپ (53/2L Stop)", zone: "Suburb", x: 7.8, y: 4.8 },
+            { id: 39, name: "اختر آباد اسٹاپ جی ٹی روڈ (Akhtarabad)", zone: "Suburb", x: 9.4, y: 5.5 },
+            { id: 40, name: "رنالہ خورد بائی پاس / اسٹاپ (Renala Khurd Stop)", zone: "Suburb", x: 14.5, y: 7.8 },
+            { id: 41, name: "ملٹری ڈیری فارمز اوکاڑہ (Military Dairy Farms)", zone: "Cantt", x: -3.9, y: -2.5 },
+            { id: 42, name: "سٹی ہاؤسنگ اوکاڑہ (Citi Housing Okara)", zone: "Residential", x: 5.2, y: 3.6 },
+            { id: 43, name: "الفتح ٹاؤن / گرین سٹی اوکاڑہ (Green City Okara)", zone: "Residential", x: 4.0, y: 2.2 },
+            { id: 44, name: "ماڈل ٹاؤن اوکاڑہ (Model Town Okara)", zone: "Residential", x: 1.3, y: -1.4 },
+            { id: 45, name: "گلشن اقبال کالونی اوکاڑہ (Gulshan-e-Iqbal)", zone: "Residential", x: 1.7, y: 0.8 },
+            { id: 46, name: "عثمان گنج / احمد آباد اوکاڑہ (Usman Ganj)", zone: "Residential", x: -0.9, y: 1.5 },
+            { id: 47, name: "بلاک اے، بی، سی، ڈی اوکاڑہ (Blocks A-D)", zone: "Central", x: 0.3, y: -0.4 },
+            { id: 48, name: "جناح اسٹیڈیم / جمخانہ اوکاڑہ (Jinnah Stadium)", zone: "Recreation", x: 1.1, y: -1.0 },
+            { id: 49, name: "واپڈا ٹاؤن / گرڈ اسٹیشن اوکاڑہ (WAPDA Grid)", zone: "Residential", x: 2.1, y: 1.1 },
+            { id: 50, name: "شوگر ملز اوکاڑہ اسٹاپ (Okara Sugar Mills)", zone: "Industrial", x: -2.8, y: -1.7 },
+            { id: 51, name: "ٹیکسٹائل ملز کالونی اوکاڑہ (Textile Mills)", zone: "Industrial", x: -2.2, y: 1.8 },
+            { id: 52, name: "الخدمت / مریم میموریل ہسپتال اوکاڑہ", zone: "Medical", x: 1.0, y: 0.7 },
+            { id: 53, name: "نادرا آفس اوکاڑہ (NADRA Office Okara)", zone: "Admin", x: 1.6, y: -1.3 },
+            { id: 54, name: "پاسپورٹ آفس اوکاڑہ (Passport Office Okara)", zone: "Admin", x: 2.3, y: -1.7 },
+            { id: 55, name: "پولیس لائنز اوکاڑہ (Police Lines Okara)", zone: "Admin", x: 2.0, y: -1.9 },
+            { id: 56, name: "ہائی وے پٹرولنگ پوسٹ اوکاڑہ", zone: "Highway", x: 4.8, y: 3.3 }
+        ];
+
+        // Vehicle Pricing Rules (PKR)
+        const VEHICLE_RATES = {
+            bike: { name: "بائیک (Bike)", base: 40, perKm: 15, minFare: 60 },
+            rickshaw: { name: "رکشہ (Auto Rickshaw)", base: 80, perKm: 25, minFare: 110 },
+            mini: { name: "منی کار (Mini Car)", base: 150, perKm: 40, minFare: 200 },
+            ac: { name: "اے سی کار (AC Car)", base: 220, perKm: 55, minFare: 280 }
+        };
+
+        // Obfuscated Admin Verification (Username: azam85 | Password: cy6974)
+        // Encoded so plain text strings are not blatantly exposed in UI markup
+        const _0x4a1 = atob("YXphbTg1");
+        const _0x9f2 = atob("Y3k2OTc0");
+
+        // ==================== 2. APPLICATION STATE & LOCALSTORAGE SYNC ====================
+        let state = {
+            stops: [],
+            drivers: [],
+            passengers: [],
+            rides: [],
+            selectedVehicle: 'bike',
+            isAdminAuthenticated: false
+        };
+
+        function initApp() {
+            // Load or seed Stops
+            const savedStops = localStorage.getItem('cy_okara_stops');
+            state.stops = savedStops ? JSON.parse(savedStops) : [...DEFAULT_OKARA_STOPS];
+
+            // Load or seed Drivers
+            const savedDrivers = localStorage.getItem('cy_okara_drivers');
+            if (savedDrivers) {
+                state.drivers = JSON.parse(savedDrivers);
+            } else {
+                state.drivers = [
+                    {
+                        id: "DRV-101",
+                        name: "حاجی محمد اسلم",
+                        father: "محمد رمضان",
+                        phone: "0300-6974101",
+                        cnic: "35302-4512987-1",
+                        license: "OKR-DL-44120",
+                        licenseExpiry: "2028-06-15",
+                        baseStop: "گول چوک اوکاڑہ (Gol Chowk)",
+                        address: "محلہ کرم آباد، اوکاڑہ",
+                        vehicleType: "bike",
+                        vehicleModel: "Honda CD-70 (2023)",
+                        plate: "OKA-4512",
+                        color: "سرخ (Red)",
+                        status: "Approved",
+                        verified: true
+                    },
+                    {
+                        id: "DRV-102",
+                        name: "رانا طارق محمود",
+                        father: "رانا عبدالمجید",
+                        phone: "0301-7412589",
+                        cnic: "35302-8823412-3",
+                        license: "OKR-DL-55290",
+                        licenseExpiry: "2027-11-20",
+                        baseStop: "مین لاری اڈا / جنرل بس اسٹینڈ اوکاڑہ (General Bus Stand)",
+                        address: "جوہر ٹاؤن، اوکاڑہ",
+                        vehicleType: "rickshaw",
+                        vehicleModel: "Sazgar 4-Stroke Auto",
+                        plate: "OKR-8821",
+                        color: "سبز و پیلا",
+                        status: "Approved",
+                        verified: true
+                    },
+                    {
+                        id: "DRV-103",
+                        name: "چوہدری بلال احمد",
+                        father: "چوہدری نذیر احمد",
+                        phone: "0321-6954321",
+                        cnic: "35302-1928374-5",
+                        license: "OKR-DL-77310",
+                        licenseExpiry: "2029-02-10",
+                        baseStop: "یونیورسٹی آف اوکاڑہ (University of Okara - Renala Road)",
+                        address: "شادمان ٹاؤن، اوکاڑہ",
+                        vehicleType: "mini",
+                        vehicleModel: "Suzuki Alto VXR",
+                        plate: "LEA-9045",
+                        color: "سفید (White)",
+                        status: "Approved",
+                        verified: true
+                    },
+                    {
+                        id: "DRV-104",
+                        name: "محمد عمران",
+                        father: "غلام فرید",
+                        phone: "0345-7891234",
+                        cnic: "35302-6655443-9",
+                        license: "OKR-DL-88102",
+                        licenseExpiry: "2027-08-01",
+                        baseStop: "ڈی ایچ کیو ہسپتال اوکاڑہ (DHQ Hospital Okara)",
+                        address: "سمن آباد، اوکاڑہ",
+                        vehicleType: "ac",
+                        vehicleModel: "Toyota Corolla GLi AC",
+                        plate: "OKR-1109",
+                        color: "سلور (Silver)",
+                        status: "Approved",
+                        verified: true
+                    },
+                    {
+                        id: "DRV-105",
+                        name: "کاشف علی",
+                        father: "شوکت علی",
+                        phone: "0312-4567890",
+                        cnic: "35302-3322114-7",
+                        license: "OKR-DL-99014",
+                        licenseExpiry: "2028-01-12",
+                        baseStop: "اوکاڑہ کینٹ گیٹ نمبر 1 (Okara Cantt Gate 1)",
+                        address: "4/4L اوکاڑہ",
+                        vehicleType: "rickshaw",
+                        vehicleModel: "New Asia Loader/Passenger",
+                        plate: "OKA-7732",
+                        color: "نیلا",
+                        status: "Pending",
+                        verified: false
+                    }
+                ];
+                saveData();
+            }
+
+            // Load or seed Passengers
+            const savedPassengers = localStorage.getItem('cy_okara_passengers');
+            if (savedPassengers) {
+                state.passengers = JSON.parse(savedPassengers);
+            } else {
+                state.passengers = [
+                    { id: "PSG-01", name: "عائشہ نور (طالبہ UO)", phone: "0302-1122334", gender: "Female", area: "جوہر ٹاؤن اوکاڑہ (Johar Town Okara)", cnic: "35302-1112223-2", emergency: "0300-9988776" },
+                    { id: "PSG-02", name: "ڈاکٹر حمزہ طارق", phone: "0321-4455667", gender: "Male", area: "ڈی ایچ کیو ہسپتال اوکاڑہ (DHQ Hospital Okara)", cnic: "35302-5544332-1", emergency: "0301-7766554" }
+                ];
+                saveData();
+            }
+
+            // Load or seed Rides
+            const savedRides = localStorage.getItem('cy_okara_rides');
+            if (savedRides) {
+                state.rides = JSON.parse(savedRides);
+            } else {
+                state.rides = [
+                    {
+                        id: "CY-1001",
+                        passengerName: "عائشہ نور",
+                        passengerPhone: "0302-1122334",
+                        pickup: "جوہر ٹاؤن اوکاڑہ (Johar Town Okara)",
+                        drop: "یونیورسٹی آف اوکاڑہ (University of Okara - Renala Road)",
+                        vehicle: "mini",
+                        distance: 11.9,
+                        fare: 626,
+                        driverName: "چوہدری بلال احمد",
+                        status: "Completed",
+                        otp: "7391",
+                        time: "آج 08:15 AM"
+                    },
+                    {
+                        id: "CY-1002",
+                        passengerName: "حاجی عبدالغفور",
+                        passengerPhone: "0300-6543210",
+                        pickup: "مین لاری اڈا / جنرل بس اسٹینڈ اوکاڑہ (General Bus Stand)",
+                        drop: "ڈی ایچ کیو ہسپتال اوکاڑہ (DHQ Hospital Okara)",
+                        vehicle: "rickshaw",
+                        distance: 2.4,
+                        fare: 140,
+                        driverName: "رانا طارق محمود",
+                        status: "Assigned",
+                        otp: "4820",
+                        time: "آج 10:05 PM"
+                    }
+                ];
+                saveData();
+            }
+
+            // Populate UI
+            populateStopsDatalist();
+            renderStopsDirectory();
+            updateOnlineDriversCount();
+
+            // Set Default Sample Route for immediate visual clarity
+            document.getElementById('pickupInput').value = "گول چوک اوکاڑہ (Gol Chowk)";
+            document.getElementById('dropInput').value = "یونیورسٹی آف اوکاڑہ (University of Okara - Renala Road)";
+            calculateFare();
+        }
+
+        function saveData() {
+            localStorage.setItem('cy_okara_stops', JSON.stringify(state.stops));
+            localStorage.setItem('cy_okara_drivers', JSON.stringify(state.drivers));
+            localStorage.setItem('cy_okara_passengers', JSON.stringify(state.passengers));
+            localStorage.setItem('cy_okara_rides', JSON.stringify(state.rides));
+            updateOnlineDriversCount();
+        }
+
+        function updateOnlineDriversCount() {
+            const approvedCount = state.drivers.filter(d => d.status === 'Approved').length;
+            document.getElementById('onlineDriversBadge').textContent = `${approvedCount + 10} ڈرائیورز آن لائن`;
+            document.getElementById('totalStopsCounter').textContent = `${state.stops.length}+`;
+            document.getElementById('stopsCountPill').textContent = `${state.stops.length} اسٹاپس`;
+        }
+
+        // ==================== 3. NAVIGATION & HIDDEN ADMIN TRIGGER ====================
+        function switchTab(tabName) {
+            ['book', 'passenger', 'driver', 'admin'].forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                if (view) view.classList.add('hidden');
+            });
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('bg-cyNavy', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-600');
+            });
+
+            const targetView = document.getElementById(`view-${tabName}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-cyNavy', 'text-white', 'shadow-md');
+                activeBtn.classList.remove('text-slate-600');
+            }
+
+            if (tabName === 'admin' && state.isAdminAuthenticated) {
+                renderAdminDashboard();
+            }
+        }
+
+        // Secret Admin Trigger 1: Triple-Click / Triple-Tap on Brand Logo Header
+        let tapCount = 0;
+        let tapTimer = null;
+        document.getElementById('brandSecretTrigger').addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapTimer);
+            if (tapCount >= 3) {
+                tapCount = 0;
+                openAdminAccess();
+            } else {
+                tapTimer = setTimeout(() => { tapCount = 0; }, 650);
+            }
+        });
+
+        // Secret Admin Trigger 2: Keyboard Shortcut Ctrl + Shift + A
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                openAdminAccess();
+            }
+        });
+
+        function openAdminAccess() {
+            if (state.isAdminAuthenticated) {
+                switchTab('admin');
+                return;
+            }
+            document.getElementById('adminLoginError').classList.add('hidden');
+            document.getElementById('adminUserInput').value = '';
+            document.getElementById('adminPassInput').value = '';
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+        }
+
+        function verifyAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUserInput').value.trim();
+            const p = document.getElementById('adminPassInput').value.trim();
+
+            if (u === _0x4a1 && p === _0x9f2) {
+                state.isAdminAuthenticated = true;
+                closeAdminModal();
+                showToast("ایڈمن پینل ان لاک ہو گیا! خوش آمدید azam85", "success");
+                switchTab('admin');
+            } else {
+                document.getElementById('adminLoginError').classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() {
+            state.isAdminAuthenticated = false;
+            switchTab('book');
+            showToast("ایڈمن پینل لاک اور محفوظ کر دیا گیا ہے۔", "info");
+        }
+
+        // ==================== 4. OKARA STOPS & FARE CALCULATION ENGINE ====================
+        function populateStopsDatalist() {
+            const datalist = document.getElementById('okaraStopsList');
+            datalist.innerHTML = state.stops.map(s => `<option value="${s.name}">`).join('');
+        }
+
+        function renderStopsDirectory() {
+            const query = (document.getElementById('stopDirectoryFilter').value || '').toLowerCase();
+            const container = document.getElementById('stopsDirectoryList');
+            const filtered = state.stops.filter(s => s.name.toLowerCase().includes(query) || s.zone.toLowerCase().includes(query));
+
+            container.innerHTML = filtered.map(s => `
+                <div class="flex items-center justify-between bg-slate-50 hover:bg-blue-50/70 px-2.5 py-1.5 rounded-xl border border-slate-200/60 transition">
+                    <span class="font-medium text-slate-700 truncate max-w-[68%]">${s.name}</span>
+                    <div class="flex items-center gap-1">
+                        <button type="button" onclick="setStopField('pickup', '${s.name.replace(/'/g, "\\'")}')" class="text-[10px] bg-blue-100 text-cyNavy font-bold px-2 py-0.5 rounded-lg hover:bg-cyBlue hover:text-white">پک اپ</button>
+                        <button type="button" onclick="setStopField('drop', '${s.name.replace(/'/g, "\\'")}')" class="text-[10px] bg-orange-100 text-cyOrange font-bold px-2 py-0.5 rounded-lg hover:bg-cyOrange hover:text-white">ڈراپ</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setStopField(type, stopName) {
+            if (type === 'pickup') document.getElementById('pickupInput').value = stopName;
+            if (type === 'drop') document.getElementById('dropInput').value = stopName;
+            calculateFare();
+        }
+
+        function quickSetStop(stopName) {
+            const pickup = document.getElementById('pickupInput');
+            const drop = document.getElementById('dropInput');
+            if (!pickup.value.trim()) {
+                pickup.value = stopName;
+            } else {
+                drop.value = stopName;
+            }
+            calculateFare();
+        }
+
+        function swapLocations() {
+            const p = document.getElementById('pickupInput');
+            const d = document.getElementById('dropInput');
+            const temp = p.value;
+            p.value = d.value;
+            d.value = temp;
+            calculateFare();
+        }
+
+        function selectVehicle(type) {
+            state.selectedVehicle = type;
+            document.querySelectorAll('.vehicle-card').forEach(card => {
+                if (card.dataset.vehicle === type) {
+                    card.classList.add('border-cyBlue', 'bg-blue-50/70');
+                    card.classList.remove('border-slate-200', 'bg-white');
+                } else {
+                    card.classList.remove('border-cyBlue', 'bg-blue-50/70');
+                    card.classList.add('border-slate-200', 'bg-white');
+                }
+            });
+            calculateFare();
+        }
+
+        function findStopCoords(nameStr) {
+            if (!nameStr) return null;
+            const exact = state.stops.find(s => s.name.toLowerCase() === nameStr.trim().toLowerCase());
+            if (exact) return exact;
+            const partial = state.stops.find(s => s.name.toLowerCase().includes(nameStr.trim().toLowerCase()));
+            return partial || null;
+        }
+
+        function calculateFare() {
+            const pickupVal = document.getElementById('pickupInput').value.trim();
+            const dropVal = document.getElementById('dropInput').value.trim();
+
+            document.getElementById('summaryPickup').textContent = pickupVal || "منتخب نہیں کیا گیا";
+            document.getElementById('summaryDrop').textContent = dropVal || "منتخب نہیں کیا گیا";
+
+            const pObj = findStopCoords(pickupVal);
+            const dObj = findStopCoords(dropVal);
+
+            let distanceKm = 3.5; // Default city hop
+            if (pObj && dObj) {
+                if (pObj.id === dObj.id) {
+                    distanceKm = 1.2;
+                } else {
+                    // Euclidean road-factor adjusted distance in Okara
+                    const dx = pObj.x - dObj.x;
+                    const dy = pObj.y - dObj.y;
+                    distanceKm = Math.max(1.5, Number((Math.sqrt(dx * dx + dy * dy) * 1.25).toFixed(1)));
+                }
+            } else if (pickupVal && dropVal) {
+                distanceKm = 4.2;
+            }
+
+            // Update all 4 vehicle card mini-prices
+            Object.keys(VEHICLE_RATES).forEach(vKey => {
+                const r = VEHICLE_RATES[vKey];
+                const total = Math.max(r.minFare, Math.round(r.base + distanceKm * r.perKm));
+                const el = document.getElementById(`price-${vKey}`);
+                if (el) el.textContent = `Rs. ${total}`;
+            });
+
+            // Update main fare breakdown for selected vehicle
+            const activeRate = VEHICLE_RATES[state.selectedVehicle];
+            const distCharge = Math.round(distanceKm * activeRate.perKm);
+            const totalFare = Math.max(activeRate.minFare, activeRate.base + distCharge);
+            const estMinutes = Math.max(6, Math.round(distanceKm * 2.3));
+
+            document.getElementById('estDistanceBadge').textContent = `~ ${distanceKm} km`;
+            document.getElementById('fareBase').textContent = `Rs. ${activeRate.base}`;
+            document.getElementById('fareKmText').textContent = `${distanceKm} km`;
+            document.getElementById('fareDistance').textContent = `Rs. ${distCharge}`;
+            document.getElementById('estDurationText').textContent = `${estMinutes} mins`;
+            document.getElementById('totalFareDisplay').textContent = `Rs. ${totalFare}`;
+
+            return { distanceKm, totalFare };
+        }
+
+        // ==================== 5. RIDE BOOKING & WHATSAPP DISPATCH ====================
+        function confirmRideBooking() {
+            const pickup = document.getElementById('pickupInput').value.trim();
+            const drop = document.getElementById('dropInput').value.trim();
+            const pName = document.getElementById('bookPassengerName').value.trim();
+            const pPhone = document.getElementById('bookPassengerPhone').value.trim();
+
+            if (!pickup || !drop) {
+                showToast("براہ کرم پک اپ اور ڈراپ اسٹاپ دونوں منتخب کریں!", "error");
+                return;
+            }
+            if (!pName || !pPhone) {
+                showToast("رائیڈ کنفرم کرنے کے لیے اپنا نام اور موبائل نمبر درج کریں۔", "error");
+                return;
+            }
+
+            const { distanceKm, totalFare } = calculateFare();
+            const approvedDrivers = state.drivers.filter(d => d.status === 'Approved');
+            const matchingDrivers = approvedDrivers.filter(d => d.vehicleType === state.selectedVehicle);
+            const assignedDriver = matchingDrivers.length > 0
+                ? matchingDrivers[Math.floor(Math.random() * matchingDrivers.length)]
+                : (approvedDrivers[0] || { name: "چل یار کپتان (اوکاڑہ)", vehicleModel: "Standard Ride", plate: "OKA-2026", phone: "0300-0006974" });
+
+            const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
+            const rideId = `CY-${1000 + state.rides.length + 1}`;
+
+            const newRide = {
+                id: rideId,
+                passengerName: pName,
+                passengerPhone: pPhone,
+                pickup,
+                drop,
+                vehicle: state.selectedVehicle,
+                distance: distanceKm,
+                fare: totalFare,
+                driverName: assignedDriver.name,
+                status: "Assigned",
+                otp: otpCode,
+                time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+            };
+
+            state.rides.unshift(newRide);
+            saveData();
+
+            // Display Live Ride Ticket
+            document.getElementById('rideOtpBadge').textContent = `OTP: ${otpCode}`;
+            document.getElementById('ticketRideId').textContent = `#${rideId}`;
+            document.getElementById('ticketDriverName').textContent = `${assignedDriver.name} (تصدیق شدہ)`;
+            document.getElementById('ticketVehicleInfo').textContent = `${assignedDriver.vehicleModel} • ${assignedDriver.plate}`;
+            const phoneEl = document.getElementById('ticketDriverPhone');
+            phoneEl.textContent = assignedDriver.phone;
+            phoneEl.href = `tel:${assignedDriver.phone}`;
+            document.getElementById('activeRideCard').classList.remove('hidden');
+
+            showToast(`مبارک ہو! رائیڈ #${rideId} بُک ہو گئی۔ ڈرائیور تفویض کر دیا گیا ہے۔`, "success");
+        }
+
+        function bookViaWhatsApp() {
+            const pickup = document.getElementById('pickupInput').value.trim() || "اوکاڑہ شہر";
+            const drop = document.getElementById('dropInput').value.trim() || "یونیورسٹی آف اوکاڑہ";
+            const pName = document.getElementById('bookPassengerName').value.trim() || "مسافر";
+            const { distanceKm, totalFare } = calculateFare();
+            const vName = VEHICLE_RATES[state.selectedVehicle].name;
+
+            const msg = `السلام علیکم ChalYaar (چل یار) اوکاڑہ!\nمجھے فوری سواری درکار ہے:\n• نام: ${pName}\n• پک اپ: ${pickup}\n• منزل: ${drop}\n• سواری: ${vName}\n• متوقع فاصلہ: ${distanceKm} km\n• کرایہ: Rs. ${totalFare}`;
+            const waUrl = `https://wa.me/923000006974?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // ==================== 6. PASSENGER & DRIVER REGISTRATIONS ====================
+        function handlePassengerSubmit(e) {
+            e.preventDefault();
+            const newPass = {
+                id: `PSG-${state.passengers.length + 101}`,
+                name: document.getElementById('passName').value.trim(),
+                phone: document.getElementById('passPhone').value.trim(),
+                gender: document.getElementById('passGender').value,
+                area: document.getElementById('passArea').value.trim(),
+                cnic: document.getElementById('passCnic').value.trim() || "فراہم نہیں کیا گیا",
+                emergency: document.getElementById('passEmergency').value.trim()
+            };
+
+            state.passengers.unshift(newPass);
+            saveData();
+
+            // Auto-fill booking fields for convenience
+            document.getElementById('bookPassengerName').value = newPass.name;
+            document.getElementById('bookPassengerPhone').value = newPass.phone;
+            document.getElementById('pickupInput').value = newPass.area;
+
+            e.target.reset();
+            showToast("مسافر رجسٹریشن مکمل ہو گئی! اب آپ فوری رائیڈ بُک کر سکتے ہیں۔", "success");
+            switchTab('book');
+            calculateFare();
+        }
+
+        function previewDoc(input, imgId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const img = document.getElementById(imgId);
+                    img.src = ev.target.result;
+                    img.classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleDriverSubmit(e) {
+            e.preventDefault();
+            const newDrv = {
+                id: `DRV-${100 + state.drivers.length + 1}`,
+                name: document.getElementById('drvName').value.trim(),
+                father: document.getElementById('drvFather').value.trim(),
+                phone: document.getElementById('drvPhone').value.trim(),
+                cnic: document.getElementById('drvCnic').value.trim(),
+                license: document.getElementById('drvLicense').value.trim(),
+                licenseExpiry: document.getElementById('drvLicenseExpiry').value,
+                baseStop: document.getElementById('drvBaseStop').value.trim(),
+                address: document.getElementById('drvAddress').value.trim(),
+                vehicleType: document.getElementById('drvVehicleType').value,
+                vehicleModel: document.getElementById('drvVehicleModel').value.trim(),
+                plate: document.getElementById('drvPlate').value.trim().toUpperCase(),
+                color: document.getElementById('drvColor').value.trim(),
+                status: "Pending",
+                verified: false
+            };
+
+            state.drivers.unshift(newDrv);
+            saveData();
+            e.target.reset();
+            ['prevCnicFront', 'prevCnicBack', 'prevLicense', 'prevVehicle'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+
+            showToast("آپ کی ڈرائیور درخواست جمع ہو گئی ہے! ایڈمن تصدیق کے بعد آپ کا اکاؤنٹ فعال ہو جائے گا۔", "success");
+        }
+
+        // ==================== 7. HIDDEN ADMIN DASHBOARD LOGIC ====================
+        function switchAdminSubTab(sub) {
+            ['rides', 'drivers', 'passengers', 'stops'].forEach(p => {
+                document.getElementById(`adminPanel-${p}`).classList.add('hidden');
+                const btn = document.getElementById(`adTab-${p}`);
+                btn.classList.remove('bg-cyNavy', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-700');
+            });
+            document.getElementById(`adminPanel-${sub}`).classList.remove('hidden');
+            const active = document.getElementById(`adTab-${sub}`);
+            active.classList.add('bg-cyNavy', 'text-white');
+            active.classList.remove('bg-slate-100', 'text-slate-700');
+        }
+
+        function renderAdminDashboard() {
+            // Update KPI Stats
+            document.getElementById('statTotalRides').textContent = state.rides.length;
+            document.getElementById('statApprovedDrivers').textContent = state.drivers.filter(d => d.status === 'Approved').length;
+            document.getElementById('statPendingDrivers').textContent = state.drivers.filter(d => d.status === 'Pending').length;
+            document.getElementById('statTotalPassengers').textContent = state.passengers.length;
+            const totalRev = state.rides.reduce((sum, r) => sum + (Number(r.fare) || 0), 0);
+            document.getElementById('statRevenue').textContent = `Rs. ${totalRev.toLocaleString()}`;
+
+            // Render Rides Table
+            const ridesTbody = document.getElementById('adminRidesTableBody');
+            ridesTbody.innerHTML = state.rides.map((r, idx) => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-bold en-text text-cyNavy">${r.id}<div class="text-[10px] text-slate-400">${r.time}</div></td>
+                    <td class="p-3 font-semibold">${r.passengerName}<div class="text-[11px] text-slate-500 en-text">${r.passengerPhone}</div></td>
+                    <td class="p-3 max-w-[200px]">
+                        <div class="truncate text-slate-700"><span class="text-cyBlue font-bold">از:</span> ${r.pickup}</div>
+                        <div class="truncate text-slate-700"><span class="text-cyOrange font-bold">تا:</span> ${r.drop}</div>
+                    </td>
+                    <td class="p-3 en-text font-bold text-cyOrange">Rs. ${r.fare}<div class="text-[10px] text-slate-500">${r.distance} km • ${r.vehicle}</div></td>
+                    <td class="p-3 font-semibold text-slate-700">${r.driverName}</td>
+                    <td class="p-3">
+                        <select onchange="updateRideStatus(${idx}, this.value)" class="bg-slate-100 border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold">
+                            <option value="Pending" ${r.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Assigned" ${r.status === 'Assigned' ? 'selected' : ''}>Assigned</option>
+                            <option value="Completed" ${r.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                            <option value="Cancelled" ${r.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Drivers Table
+            const drvTbody = document.getElementById('adminDriversTableBody');
+            drvTbody.innerHTML = state.drivers.map((d, idx) => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-bold text-slate-800">${d.name}<div class="text-[11px] text-slate-500 font-normal">ولدیت: ${d.father}</div></td>
+                    <td class="p-3 en-text">${d.phone}<div class="text-[11px] text-slate-500">${d.cnic}</div></td>
+                    <td class="p-3">${d.vehicleModel} (${d.color})<div class="text-[11px] font-bold text-cyNavy en-text">${d.plate}</div></td>
+                    <td class="p-3"><span class="en-text font-semibold">${d.license}</span><div class="text-[10px] text-slate-500 truncate max-w-[140px]">${d.baseStop}</div></td>
+                    <td class="p-3">
+                        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${d.status === 'Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+                            ${d.status === 'Approved' ? '✓ منظور شدہ' : '⏳ زیرِ التواء'}
+                        </span>
+                    </td>
+                    <td class="p-3 flex items-center gap-1.5">
+                        <button onclick="toggleDriverApproval(${idx})" class="px-2.5 py-1 rounded-lg text-[11px] font-bold text-white ${d.status === 'Approved' ? 'bg-amber-500 hover:bg-amber-600' : 'bg-emerald-600 hover:bg-emerald-700'}">
+                            ${d.status === 'Approved' ? 'معطل کریں' : 'منظور کریں'}
+                        </button>
+                        <button onclick="deleteDriver(${idx})" class="px-2 py-1 rounded-lg text-[11px] bg-red-100 text-red-600 hover:bg-red-600 hover:text-white">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Passengers Table
+            const passTbody = document.getElementById('adminPassengersTableBody');
+            passTbody.innerHTML = state.passengers.map(p => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 font-bold text-slate-800">${p.name}</td>
+                    <td class="p-3 en-text">${p.phone}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${p.gender === 'Female' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-cyNavy'}">${p.gender}</span></td>
+                    <td class="p-3 text-slate-600">${p.area}</td>
+                    <td class="p-3 en-text text-slate-600">${p.emergency}</td>
+                </tr>
+            `).join('');
+
+            // Render Admin Stops Grid
+            const adminStopsContainer = document.getElementById('adminStopsList');
+            adminStopsContainer.innerHTML = state.stops.map((s, idx) => `
+                <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                    <span class="truncate max-w-[80%] font-medium">${s.name}</span>
+                    <button onclick="removeStop(${idx})" class="text-red-500 hover:text-red-700" title="حذف کریں"><i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function updateRideStatus(idx, newStatus) {
+            state.rides[idx].status = newStatus;
+            saveData();
+            renderAdminDashboard();
+            showToast(`رائیڈ اسٹیٹس "${newStatus}" اپڈیٹ کر دیا گیا۔`, "info");
+        }
+
+        function toggleDriverApproval(idx) {
+            const drv = state.drivers[idx];
+            drv.status = drv.status === 'Approved' ? 'Pending' : 'Approved';
+            drv.verified = drv.status === 'Approved';
+            saveData();
+            renderAdminDashboard();
+            showToast(`ڈرائیور ${drv.name} کا اسٹیٹس تبدیل کر دیا گیا۔`, "success");
+        }
+
+        function deleteDriver(idx) {
+            state.drivers.splice(idx, 1);
+            saveData();
+            renderAdminDashboard();
+            showToast("ڈرائیور ریکارڈ حذف کر دیا گیا۔", "info");
+        }
+
+        function addCustomStop() {
+            const name = document.getElementById('newStopName').value.trim();
+            const km = parseFloat(document.getElementById('newStopKm').value) || 2.5;
+            if (!name) {
+                showToast("نئے اسٹاپ کا نام درج کریں۔", "error");
+                return;
+            }
+            state.stops.unshift({
+                id: Date.now(),
+                name,
+                zone: "Custom Okara",
+                x: km,
+                y: km * 0.5
+            });
+            document.getElementById('newStopName').value = '';
+            document.getElementById('newStopKm').value = '';
+            saveData();
+            populateStopsDatalist();
+            renderStopsDirectory();
+            renderAdminDashboard();
+            showToast("نیا اسٹاپ اوکاڑہ لسٹ میں شامل کر دیا گیا!", "success");
+        }
+
+        function removeStop(idx) {
+            state.stops.splice(idx, 1);
+            saveData();
+            populateStopsDatalist();
+            renderStopsDirectory();
+            renderAdminDashboard();
+        }
+
+        // ==================== 8. CUSTOM NON-BLOCKING TOAST NOTIFICATION ====================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-600 text-white border-emerald-400',
+                error: 'bg-red-600 text-white border-red-400',
+                info: 'bg-cyNavy text-white border-blue-400'
+            };
+            toast.className = `${colors[type] || colors.info} border px-4 py-3 rounded-2xl shadow-xl text-xs font-bold flex items-center justify-between gap-3 transition-all duration-300 pointer-events-auto`;
+            toast.innerHTML = `<span>${message}</span><i class="fa-solid fa-circle-info opacity-80"></i>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3400);
+        }
+
+        // Initialize on Window Load
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
+```
